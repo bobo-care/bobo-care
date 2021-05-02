@@ -1,0 +1,8 @@
+.idea/
+venv/
+*.iml
+bobocare/.env
+bobocare/static/
+*.pyo
+*.pyc
+a.sh

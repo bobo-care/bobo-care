@@ -1,0 +1,27 @@
+version: "3.5"
+services:
+  mysql:
+    image: library/mysql:8
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - mysqldata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: bobocare
+      MYSQL_DATABASE: bobocare
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: bobocare
+      POSTGRES_USER: bobocare
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
+  mysqldata:
