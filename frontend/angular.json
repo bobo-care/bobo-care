@@ -71,7 +71,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "bobo-care:build"
+            "browserTarget": "bobo-care:build",
+            "proxyConfig": "proxy.json"
           },
           "configurations": {
             "production": {

@@ -1,0 +1,8 @@
+{
+  "/api/*": {
+    "target": "https://baby.sotomski.pl",
+    "secure": true,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

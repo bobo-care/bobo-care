@@ -21,8 +21,8 @@ from drf_spectacular.views import SpectacularAPIView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    path('auth/', include('rest_framework_social_oauth2.urls')),
-    path('openapi/', SpectacularAPIView.as_view(), name='openapi-schema'),
+    path('api/auth/', include('rest_framework_social_oauth2.urls')),
+    path('api/openapi/', SpectacularAPIView.as_view(), name='openapi-schema'),
     path('redoc/', TemplateView.as_view(
         template_name='redoc.html',
         extra_context={'schema_url': 'openapi-schema'}
