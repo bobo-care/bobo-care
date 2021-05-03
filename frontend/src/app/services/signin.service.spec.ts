@@ -13,4 +13,15 @@ describe('SigninService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should return backend type for provider', () => {
+    expect(service.getBackendTypeForProvider('GOOGLE')).toEqual('google-oauth2');
+    expect(service.getBackendTypeForProvider('FACEBOOK')).toEqual('facebook');
+  });
+
+  it('should throw an error when there is no backend type for provider', () => {
+    expect(() => {
+      service.getBackendTypeForProvider('foobar');
+    }).toThrowError();
+  });
 });
