@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build_frontend:
+  build:
     working_directory: ~/frontend
     docker:
       - image: circleci/node:14-browsers
