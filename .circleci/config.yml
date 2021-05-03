@@ -1,11 +1,12 @@
 version: 2
 jobs:
-  build_frontend:
-    working_directory: ~/frontend
+  build:
+    working_directory: ~/project/frontend
     docker:
       - image: circleci/node:14-browsers
     steps:
-      - checkout
+      - checkout:
+          path: ~/project
       - restore_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
@@ -17,14 +18,14 @@ jobs:
             - ~/.cache/yarn
             - ./node_modules
       - run:
-          name: angular-build
-          command: yarn ng -- build --prod --no-progress
+          name: angular-lint
+          command: yarn ng lint
       - run:
           name: angular-test
-          command: yarn ng -- test --single-run --no-progress
+          command: yarn ng test --code-coverage --watch false --progress false
       - run:
-          name: angular-lint
-          command: yarn ng -- lint
+          name: angular-build
+          command: yarn ng build --prod --no-progress
       - run:
           name: Upload reports to Codecov
           command: bash <(curl -s https://codecov.io/bash) -Z

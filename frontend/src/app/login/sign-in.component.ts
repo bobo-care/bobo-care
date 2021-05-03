@@ -18,7 +18,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     private signinService: SigninService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.sub.add(
       this.authService.authState.subscribe((user: SocialUser) => {
         console.log(user);
@@ -38,7 +38,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
 
