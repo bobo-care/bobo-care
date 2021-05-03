@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
+import { FacebookLoginProvider, GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { HttpClient } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 
@@ -39,5 +39,9 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   signInWithGoogle(): void {
     this.authService.signIn(GoogleLoginProvider.PROVIDER_ID);
+  }
+
+  signInWithFacebook(): void {
+    this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
   }
 }
