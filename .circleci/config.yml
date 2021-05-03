@@ -18,14 +18,14 @@ jobs:
             - ~/.cache/yarn
             - ./node_modules
       - run:
-          name: angular-build
-          command: yarn ng build --prod --no-progress
-      - run:
-          name: angular-test
-          command: yarn ng test --single-run --no-progress
-      - run:
           name: angular-lint
           command: yarn ng lint
+      - run:
+          name: angular-test
+          command: yarn ng test --code-coverage --watch false --progress false
+      - run:
+          name: angular-build
+          command: yarn ng build --prod --no-progress
       - run:
           name: Upload reports to Codecov
           command: bash <(curl -s https://codecov.io/bash) -Z
