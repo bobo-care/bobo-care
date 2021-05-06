@@ -1,28 +1,45 @@
 from rest_framework import serializers
 
-from api.models import Nap, Baby, Feed, Diaper
+from api.models import Nap, Baby, Feed, Diaper, Guardian
+from django.contrib.auth.models import User
 
 
-class NapSerializer(serializers.HyperlinkedModelSerializer):
+class NapSerializer(serializers.ModelSerializer):
     class Meta:
         model = Nap
-        fields = ['baby', 'startTime', 'endTime']
+        fields = ['id', 'baby', 'start_time', 'end_time']
 
 
-class BabySerializer(serializers.HyperlinkedModelSerializer):
+class BabySerializer(serializers.ModelSerializer):
     class Meta:
         model = Baby
-        fields = ['name', 'born']
+        fields = ['id', 'name', 'born']
 
 
-class FeedSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'email', 'first_name', 'last_name']
+
+
+class GuardianSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(read_only=True)
+    baby = BabySerializer(read_only=True)
+    user = serializers.PrimaryKeyRelatedField(read_only=True)
+
+    class Meta:
+        model = Guardian
+        fields = ['id', 'baby', 'email', 'owner', 'user', 'status']
+
+
+class FeedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feed
-        fields = ['baby', 'startTime']
+        fields = ['id', 'baby', 'start_time', 'quantity', 'unit', 'food_type']
 
 
-class DiaperSerializer(serializers.HyperlinkedModelSerializer):
+class DiaperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diaper
-        fields = ['baby', 'time', 'poop', 'wet']
+        fields = ['id', 'baby', 'time', 'poop', 'wet']
 

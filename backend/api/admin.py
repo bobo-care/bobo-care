@@ -10,7 +10,7 @@ class DiaperAdmin(admin.ModelAdmin):
 
 @admin.register(Nap)
 class NapAdmin(admin.ModelAdmin):
-    list_display = ('baby', 'startTime', 'endTime')
+    list_display = ('baby', 'start_time', 'end_time')
 
 
 @admin.register(Baby)
@@ -20,4 +20,4 @@ class BabyAdmin(admin.ModelAdmin):
 
 @admin.register(Feed)
 class FeedAdmin(admin.ModelAdmin):
-    list_display = ('baby', 'startTime', 'quantity', 'unit')
+    list_display = ('baby', 'start_time', 'quantity', 'unit')
