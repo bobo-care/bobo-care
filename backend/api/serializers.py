@@ -24,12 +24,12 @@ class UserSerializer(serializers.ModelSerializer):
 
 class GuardianSerializer(serializers.ModelSerializer):
     owner = UserSerializer(read_only=True)
-    baby = BabySerializer(read_only=True)
+    baby_data = BabySerializer(source='baby', read_only=True)
     user = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Guardian
-        fields = ['id', 'baby', 'email', 'owner', 'user', 'status']
+        fields = ['id', 'baby', 'baby_data', 'email', 'owner', 'user', 'status']
 
 
 class FeedSerializer(serializers.ModelSerializer):
