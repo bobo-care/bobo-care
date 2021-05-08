@@ -3,7 +3,8 @@ import { SignInComponent } from './sign-in.component';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
 import { of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { SigninService } from '../services/signin.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AppRoutingModule } from '../../app-routing.module';
 
 describe('SignInComponent', () => {
   let component: SignInComponent;
@@ -18,6 +19,7 @@ describe('SignInComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ SignInComponent ],
+      imports: [HttpClientTestingModule, AppRoutingModule],
       providers: [
         {
           provide: SocialAuthService,
