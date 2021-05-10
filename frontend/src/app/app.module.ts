@@ -11,7 +11,7 @@ import {
 } from 'angularx-social-login';
 import { SignInComponent } from './login/sign-in.component';
 import { HttpClientModule } from '@angular/common/http';
-import * as Sentry from "@sentry/angular";
+import * as Sentry from '@sentry/angular';
 import { Router } from '@angular/router';
 
 @NgModule({
