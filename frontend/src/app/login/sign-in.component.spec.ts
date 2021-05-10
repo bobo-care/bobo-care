@@ -12,6 +12,7 @@ describe('SignInComponent', () => {
     authState: of({authToken: 'foobar', provider: 'GOOGLE'} as SocialUser)
   };
   const httpClientSpy = jasmine.createSpyObj(['post']);
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   httpClientSpy.post.and.callFake(() => of({access_token: 'fake_access_token', resp_token: 'fake_resp_token'}));
 
   beforeEach(async () => {

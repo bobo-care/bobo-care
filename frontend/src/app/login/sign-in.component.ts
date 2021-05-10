@@ -25,11 +25,13 @@ export class SignInComponent implements OnInit, OnDestroy {
         this.http.post(
           '/api/auth/convert-token',
           {
+            /*eslint-disable */
             grant_type: 'convert_token',
             backend: this.signinService.getBackendTypeForProvider(user.provider),
             client_id: 'TeOcWRoC1Wnq4eftcpWU8rjVYvmOKfmjylXPNJs6',
             client_secret: '7cGWz0OkTmftW8D5r91sqcvwt6eoBKXR9xqCq6ReCo4GSZXOGKLH9zS1W3PuFaROW9j662UavyAFv7FdppmCtmM6n2TqjB7Scf50Ne5vvErHBpXwwyuymfRgKwPSjNV3',
             token: user.authToken
+            /*eslint-enable */
           }
         ).subscribe((resp: any) => {
           console.log(resp.access_token, resp.refresh_token);

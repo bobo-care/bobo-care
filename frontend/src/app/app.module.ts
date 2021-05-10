@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,8 @@ import {
 } from 'angularx-social-login';
 import { SignInComponent } from './login/sign-in.component';
 import { HttpClientModule } from '@angular/common/http';
+import * as Sentry from '@sentry/angular';
+import { Router } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,22 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
   ],
   providers: [
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: true,
+      }),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => {},
+      deps: [Sentry.TraceService],
+      multi: true,
+    },
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
