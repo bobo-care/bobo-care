@@ -1,6 +1,7 @@
-version: 2
+version: 2.1
 jobs:
-  build:
+
+  frontend:
     working_directory: ~/project/frontend
     docker:
       - image: circleci/node:14-browsers
@@ -8,7 +9,7 @@ jobs:
       - checkout:
           path: ~/project
       - restore_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+            key: dependency-cache-{{ checksum "yarn.lock" }}
       - run:
           name: install-dependencies
           command: yarn install
@@ -29,3 +30,42 @@ jobs:
       - run:
           name: Upload reports to Codecov
           command: bash <(curl -s https://codecov.io/bash) -Z
+
+
+  backend:
+    working_directory: ~/project/backend
+    docker:
+      - image: cimg/python:3.8
+    steps:
+      - checkout:
+          path: ~/project
+      - restore_cache:
+          key: pipenv-dependency-cache-{{ checksum "Pipfile.lock" }}
+      - run:
+          name: install-dependencies
+          command: pipenv install
+      - save_cache:
+          key: pipenv-dependency-cache-{{ checksum "Pipfile.lock" }}
+          paths:
+            - ".venv"
+      - run:
+          name: create .env
+          command: cp bobocare/.env.example bobocare/.env
+      - run:
+          name: pylint
+          command: pipenv run pylint api
+      - run:
+          name: test
+          command: pipenv run python manage.py test --noinput
+      - run:
+          name: ls
+          command: ls -la
+      - run:
+          name: Upload reports to Codecov
+          command: bash <(curl -s https://codecov.io/bash) -Z
+
+workflows:
+  build_and_test:
+    jobs:
+      - frontend
+      - backend

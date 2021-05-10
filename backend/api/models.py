@@ -23,7 +23,10 @@ class Guardian(models.Model):
         REJECTED = 'REJECTED', 'Rejected'
         ACTIVE = 'ACTIVE', 'Active'
 
-    owner = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True, related_name='guardian_owner')
+    owner = models.ForeignKey(User,
+                              on_delete=models.DO_NOTHING,
+                              null=True,
+                              related_name='guardian_owner')
     status = models.CharField(max_length=50, choices=GuardianStatus.choices, default='NEW')
     email = models.CharField(max_length=255, null=True)
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, null=True)

@@ -15,14 +15,16 @@ def is_guardian(babies, obj, user):
 
 class IsGuardian(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
-        babies = Baby.objects.filter(guardian__user=request.user, guardian__status=Guardian.GuardianStatus.ACTIVE)
+        babies = Baby.objects.filter(guardian__user=request.user,
+                                     guardian__status=Guardian.GuardianStatus.ACTIVE)
         return is_guardian(babies, obj, request.user)
 
 
 class GuardianPermissions(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         if isinstance(obj, Baby):
-            babies = Baby.objects.filter(guardian__user=request.user, guardian__status=Guardian.GuardianStatus.ACTIVE)
+            babies = Baby.objects.filter(guardian__user=request.user,
+                                         guardian__status=Guardian.GuardianStatus.ACTIVE)
             return is_guardian(babies, obj, request.user)
         if (obj.email != request.user.email) & (view.action in ['accept', 'reject']):
             return False

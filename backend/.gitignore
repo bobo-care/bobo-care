@@ -6,3 +6,5 @@ bobocare/static/
 *.pyo
 *.pyc
 a.sh
+.coverage
+coverage.xml

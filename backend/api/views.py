@@ -1,17 +1,17 @@
+from django.db.models import Q
+from django.http import JsonResponse
 from rest_framework import permissions
 from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.contrib.auth.models import User
-from django.http import JsonResponse
 
 from api.filters import DiaperFilter, NapFilter, FeedFilter
 from api.mixins import CreateGuardedModelMixin
 from api.models import Baby, Nap, Diaper, Feed, Guardian
 from api.permissions import IsGuardian, GuardianPermissions
-from api.serializers import BabySerializer, NapSerializer, DiaperSerializer, FeedSerializer, GuardianSerializer, UserSerializer
-from rest_framework.response import Response
-from rest_framework.decorators import action
-from django.db.models import Q
+from api.serializers import BabySerializer, NapSerializer, \
+    DiaperSerializer, FeedSerializer, GuardianSerializer, UserSerializer
 
 
 class BabyViewSet(viewsets.ModelViewSet):
@@ -25,7 +25,7 @@ class BabyViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Baby.objects.filter(guardian__user=self.request.user).order_by('id')
 
-    def create(self, request, **kwargs):
+    def create(self, request,  *args, **kwargs):
         serializer = BabySerializer(data=request.data, context={'request': request})
         serializer.is_valid()
         baby = serializer.save()
@@ -50,7 +50,7 @@ class GuardianViewSet(CreateGuardedModelMixin, viewsets.ModelViewSet):
     http_method_names = ['get', 'post', 'head', 'delete']
 
     @action(detail=True, methods=['post'])
-    def accept(self, request, pk):
+    def accept(self, request):
         obj = self.get_object()
         obj.status = Guardian.GuardianStatus.ACTIVE
         obj.user = request.user
@@ -58,7 +58,7 @@ class GuardianViewSet(CreateGuardedModelMixin, viewsets.ModelViewSet):
         return Response(status=204)
 
     @action(detail=True, methods=['post'])
-    def reject(self, request, pk):
+    def reject(self, request):
         obj = self.get_object()
         obj.status = Guardian.GuardianStatus.REJECTED
         obj.user = None
@@ -71,7 +71,9 @@ class GuardianViewSet(CreateGuardedModelMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         return Guardian.objects.filter(
-            Q(owner=self.request.user) | Q(user=self.request.user) | Q(email=self.request.user.email)
+            Q(owner=self.request.user)
+            | Q(user=self.request.user)
+            | Q(email=self.request.user.email)
         ).order_by('id')
 
 
@@ -121,7 +123,7 @@ class UserInfo(APIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UserSerializer
 
-    def get(self, request, format=None):
+    def get(self, request):
         """
         Return authenticated user details
         """
