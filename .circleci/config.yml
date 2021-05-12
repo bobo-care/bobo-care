@@ -58,9 +58,6 @@ jobs:
           name: test
           command: pipenv run python manage.py test --noinput
       - run:
-          name: ls
-          command: ls -la
-      - run:
           name: Upload reports to Codecov
           command: bash <(curl -s https://codecov.io/bash) -Z
 
