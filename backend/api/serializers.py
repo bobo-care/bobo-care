@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from api.models import Nap, Baby, Feed, Diaper, Guardian
 from django.contrib.auth.models import User
+from api.models import Nap, Baby, Feed, Diaper, Guardian
 
 
 class NapSerializer(serializers.ModelSerializer):
@@ -42,4 +42,3 @@ class DiaperSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diaper
         fields = ['id', 'baby', 'time', 'poop', 'wet']
-

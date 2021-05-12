@@ -1,0 +1,4 @@
+[MASTER]
+load-plugins=pylint_django
+django-settings-module=bobocare.settings
+disable=missing-class-docstring,missing-module-docstring,missing-function-docstring,imported-auth-user,too-many-ancestors

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
+import sys
 from pathlib import Path
 import environ
 import sentry_sdk
@@ -67,7 +68,8 @@ INSTALLED_APPS = [
     'social_django',
     'rest_framework_social_oauth2',
     'rest_framework.authtoken',
-    'drf_spectacular'
+    'drf_spectacular',
+    'django_nose',
 ]
 
 MIDDLEWARE = [
@@ -176,6 +178,20 @@ AUTHENTICATION_BACKENDS = (
     'rest_framework_social_oauth2.backends.DjangoOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
+
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.social_auth.associate_by_email',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)
+
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '310597124868-stj1r0756k0paruq2oq0c525bv48l726.apps.googleusercontent.com'
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = env('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
@@ -192,3 +208,16 @@ SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'fields': 'id, name, email'
 }
+
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+# Tell nose to measure coverage on the 'foo' and 'bar' apps
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=api',
+    '--cover-xml',
+]
+
+if 'test' in sys.argv or 'test_coverage' in sys.argv:
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
