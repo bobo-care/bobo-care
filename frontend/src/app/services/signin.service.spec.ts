@@ -1,12 +1,31 @@
 import { TestBed } from '@angular/core/testing';
-
+import {
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+  SocialAuthService,
+  SocialLoginModule
+} from 'angularx-social-login';
 import { SigninService } from './signin.service';
+import { SocialAuthServiceConfig } from 'angularx-social-login/socialauth.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { AppRoutingModule } from '../app-routing.module';
 
 describe('SigninService', () => {
   let service: SigninService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [SocialLoginModule, HttpClientTestingModule, AppRoutingModule],
+      providers: [
+        {
+          provide: 'SocialAuthServiceConfig',
+          useValue: {
+            autoLogin: false,
+            providers: []
+          } as SocialAuthServiceConfig,
+        }
+      ]
+    });
     service = TestBed.inject(SigninService);
   });
 

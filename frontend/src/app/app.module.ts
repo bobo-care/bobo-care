@@ -1,23 +1,25 @@
 import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import {
   FacebookLoginProvider,
   GoogleLoginProvider,
   SocialAuthServiceConfig,
   SocialLoginModule
 } from 'angularx-social-login';
-import { SignInComponent } from './login/sign-in.component';
-import { HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import * as Sentry from '@sentry/angular';
 import { Router } from '@angular/router';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { BabiesComponent } from './components/babies/babies.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignInComponent
+    SignInComponent,
+    BabiesComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +28,11 @@ import { Router } from '@angular/router';
     HttpClientModule,
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
     {
       provide: ErrorHandler,
       useValue: Sentry.createErrorHandler({
