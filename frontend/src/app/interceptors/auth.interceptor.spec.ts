@@ -13,7 +13,7 @@ import { SigninService } from '../services/signin.service';
 describe('AuthInterceptor', () => {
   let service: BabiesService;
   let httpMock: HttpTestingController;
-  const babiesServiceSpy = jasmine.createSpyObj<BabiesService>(['getBabies'])
+  const babiesServiceSpy = jasmine.createSpyObj<BabiesService>(['getBabies']);
   babiesServiceSpy.getBabies.and.callFake(() => of({}));
   const fakeAccessToken = 'some_fake_access_token';
   const signInServiceSpy = jasmine.createSpyObj<SigninService>(['getToken']);
