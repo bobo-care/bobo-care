@@ -19,7 +19,7 @@ import { BabiesComponent } from './components/babies/babies.component';
   declarations: [
     AppComponent,
     SignInComponent,
-    BabiesComponent
+    BabiesComponent,
   ],
   imports: [
     BrowserModule,

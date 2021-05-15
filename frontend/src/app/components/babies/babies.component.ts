@@ -13,10 +13,7 @@ export class BabiesComponent implements OnInit {
   constructor(private babiesService: BabiesService) { }
 
   ngOnInit(): void {
-    this.babiesService.getBabies().subscribe((response: unknown) => {
-      this.babies = response;
-      console.log(response);
-    });
+    this.babiesService.getBabies().subscribe((response: unknown) => this.babies = response);
   }
 
 }

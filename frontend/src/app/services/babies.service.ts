@@ -9,6 +9,6 @@ export class BabiesService {
   constructor(private http: HttpClient) {}
 
   public getBabies() {
-    return this.http.get('api/babies');
+    return this.http.get('api/babies/');
   }
 }
