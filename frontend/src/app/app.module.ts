@@ -14,18 +14,24 @@ import * as Sentry from '@sentry/angular';
 import { Router } from '@angular/router';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { BabiesComponent } from './components/babies/babies.component';
+import { IonicModule } from '@ionic/angular';
+import { HomeComponent } from './components/home/home.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SignInComponent,
     BabiesComponent,
+    HomeComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SocialLoginModule,
     HttpClientModule,
+    IonicModule.forRoot(),
   ],
   providers: [
     {

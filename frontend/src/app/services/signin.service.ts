@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SocialAuthService, SocialUser } from 'angularx-social-login';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { SignInResponse } from '../interfaces/signin-response';
 
@@ -15,16 +14,9 @@ export class SigninService {
   constructor(
     private socialAuthService: SocialAuthService,
     private http: HttpClient,
-    private router: Router
   ) {
     this.providerMapping.set('GOOGLE', 'google-oauth2');
     this.providerMapping.set('FACEBOOK', 'facebook');
-  }
-
-  get isLoggedIn(): boolean {
-    const token = this.getToken();
-
-    return !!token;
   }
 
   public getBackendTypeForProvider(provider: string): string {
@@ -48,13 +40,6 @@ export class SigninService {
         /*eslint-enable */
       }
     );
-  }
-
-  public logout(): void {
-    localStorage.removeItem('access_token');
-    this.socialAuthService.signOut().then(() => {
-      this.router.navigateByUrl('sign-in');
-    });
   }
 
   public storeToken(accessToken: string): void {
